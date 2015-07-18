@@ -1,10 +1,11 @@
 from sqlite3 import dbapi2 as sqlite3
 
 from flask import Flask, jsonify, request, g, abort, make_response
+from flask_cors import CORS
 
 DATABASE = ('test.db')
 app = Flask(__name__)
-
+cors = CORS(app)
 
 def get_db():
     db = getattr(g, '_database', None)
