@@ -86,9 +86,8 @@ def add_user():
     return ''
 
 
-@app.route('/find_user')
-def find_user_by_name():
-    name = request.args.get('name', '')
+@app.route('/find_user/name/<string:name>', methods=['GET'])
+def find_user_by_name(name):
     student = find_student(name)
     return jsonify(name=student['name'], age=student['age'], sex=student['sex'])
 
