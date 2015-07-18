@@ -1,6 +1,6 @@
 from sqlite3 import dbapi2 as sqlite3
 
-from flask import Flask, jsonify, request, g
+from flask import Flask, jsonify, request, g, abort, make_response
 
 DATABASE = ('test.db')
 app = Flask(__name__)
@@ -12,6 +12,11 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
         db.row_factory = sqlite3.Row
     return db
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 @app.teardown_appcontext
@@ -52,7 +57,10 @@ def find_student(name=''):
     rv = db.execute(sql)
     res = rv.fetchall()
     rv.close()
-    return res[0]
+    if len(res) != 0:
+        return res[0]
+    else:
+        abort(404)
 
 
 def get_all_students():
