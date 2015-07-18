@@ -90,10 +90,10 @@ def users():
 
 @app.route('/add', methods=['POST'])
 def add_user():
-    if not request.json:
-        abort(400)
-    print add_student(name=request.json['name'], age=request.json['age'],
-                      sex=request.json['sex'])
+    # if not request.json:
+    #     abort(400)
+    print add_student(name=request.form['name'], age=request.form['age'],
+                      sex=request.form['sex'])
     return ''
 
 
