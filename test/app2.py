@@ -93,7 +93,7 @@ def add_user():
     if not request.json:
         abort(400)
     print add_student(name=request.json['name'], age=request.json['age'],
-                      sex=request.jsongit['sex'])
+                      sex=request.json['sex'])
     return ''
 
 
