@@ -1,4 +1,4 @@
 # sg50backend
-Send request to front end
-Get information from front end
-Store information
+1. Send request to front end
+2. Get information from front end
+3. Store information
