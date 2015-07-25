@@ -1,0 +1,8 @@
+One file: data.db
+
+data:
+    name TEXT
+    type TEXT: ONLY cdcouncil, childcare, clinic, comclub, disabled, eldercase, exercise, family, hawker, heritage, hospital, kindergarten, lib (library), monument, museum, nursing, play, relax, school
+    lat REAL
+    lng REAL
+    postcode INT: this is sort of useless
