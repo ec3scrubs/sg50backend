@@ -34,15 +34,15 @@ housing = [
 
 @app.route('/api/testfunc', methods=['GET'])
 def get_tasks():
-    return jsonify({'tasks': tasks})
+    return jsonify({'locations': housing})
 
 
-@app.route('/api/testfunc/id/<int:task_id>', methods=['GET'])
-def get_task(task_id):
-    task = [task for task in tasks if task['id'] == task_id]
-    if len(task) == 0:
+@app.route('/api/testfunc/id/<int:loc_id>', methods=['GET'])
+def get_task(loc_id):
+    loc = [loc for loc in housing if loc['id'] == loc_id]
+    if len(loc) == 0:
         abort(404)
-    return jsonify({'task': task[0]})
+    return jsonify({'locations': loc[0]})
 
 
 @app.route('/api/testfunc', methods=['POST'])
