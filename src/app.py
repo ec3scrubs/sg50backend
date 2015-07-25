@@ -12,18 +12,22 @@ cors = CORS(app)
 
 def callSD(query):
     query = query.replace(' ', '%20')
+    print "QUERY: " + query
     latlong = []
     data = json.load(urllib2.urlopen(
         "http://www.streetdirectory.com/api/?mode=search&act=all&profile=sd_mobile&country=sg&q=" + str(
             query) + "&output=json&start=0&limit=1"))
     # print data
-    if len(data) > 1:
-        lat = data[1]['y']
-        lng = data[1]['x']
-    else:
-        lat = data[0]['y']
-        lng = data[0]['x']
-    return (lat, lng)
+    try:
+        if len(data) > 1:
+            lat = data[1]['y']
+            lng = data[1]['x']
+        else:
+            lat = data[0]['y']
+            lng = data[0]['x']
+        return (lat, lng)
+    except:
+        abort(400)
 
 
 # Posting search query to backend
