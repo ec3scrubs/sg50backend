@@ -61,19 +61,19 @@ def get_task(loc_id):
         abort(404)
     return jsonify({'locations': loc[0]})
 
+#Posting search query to backend
+@app.route('/api/query', methods=['POST'])
+def create_entry():
+    #fetch latlong from SD based on address
+    #call backend to fetch results
 
-@app.route('/api/testfunc', methods=['POST'])
-def create_task():
-    if not request.json or not 'title' in request.json:
+    if not request.json or not 'address' in request.json:
         abort(400)
-    task = {
-        'id': tasks[-1]['id'] + 1,
-        'title': request.json['title'],
-        'description': request.json.get('description', ""),
-        'done': False
-    }
-    tasks.append(task)
-    return jsonify({'task': task}), 201
+    latlong = callSD(str(request.json.get('address')))
+    #backend processes based on the latlong
+
+    #housing.append(latlong)
+    return jsonify({'newEntry': latlong}), 201
 
 @app.route('/api/testfunc/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
