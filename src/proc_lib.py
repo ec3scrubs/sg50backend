@@ -1,11 +1,11 @@
 __author__ = 'mark'
 
 import sqlite3 as lite
-import json
 
 from geopy.distance import vincenty
 
 home = (1.3725179, 103.83279)
+feat_tmp = "school hospital"
 
 
 def query_data(location, type, items=5):
@@ -73,7 +73,7 @@ class Candidate(object):
         return self.price < other.price
 
     def compute_swift(self):
-        price_factor = 0.5 # Tweak price factor to adjust the importance of
+        price_factor = 1  # Tweak price factor to adjust the importance of
         # price, ironically higher number makes price less important
         price_calc = float(price_factor * 250)
         self.score = self.distance + self.value / price_calc
@@ -85,15 +85,15 @@ class Candidate(object):
     def display(self):
         print self.address, self.distance, int(self.value)
 
-def test():
-    features = "school hospital"
-    res = query_hdb(home, features)
+
+def query(location=home, features=feat_tmp):
+    res = query_hdb(location, features)
     ret = {}
     ret["n_items"] = len(res)
     for item in res:
         item.compute()
 
-    for (k,item) in enumerate(res):
+    for (k, item) in enumerate(res):
         print k
         # ret[str(k)] = {}
         tmp = {}
@@ -112,5 +112,5 @@ def test():
 
 if __name__ == "__main__":
     # res = query_data(location=home,type="school")
-    #app.run(debug=True)
+    # app.run(debug=True)
     pass
