@@ -16,7 +16,7 @@ def callSD(query):
     data = json.load(urllib2.urlopen(
         "http://www.streetdirectory.com/api/?mode=search&act=all&profile=sd_mobile&country=sg&q=" + str(
             query) + "&output=json&start=0&limit=1"))
-    print data
+    # print data
     if len(data) > 1:
         lat = data[1]['y']
         lng = data[1]['x']
@@ -36,11 +36,39 @@ def create_entry():
         abort(400)
     latlong = callSD(str(request.json.get('address')))
     feat = request.json.get("features")
-    print feat
+    minprice = request.json.get("minprice")
+    maxprice = request.json.get("maxprice")
+    # 'Child Care', 'Clinic', 'Community Club', 'Disabled-Friendly',
+    # 'Elder Care', 'Exercise Facilities', 'Family', 'Hawker Centre',
+    #  'Hospital', 'Kindergarten', 'Library', 'Nursing', 'Play',
+    #  'Relaxation', 'School'
+    # cdcouncil, childcare, clinic, comclub, disabled, eldercare, exercise,
+    # family, hawker, heritage, hospital, kindergarten, lib (library),
+    #  monument, museum, nursing, play, relax, school
+
+    feat_map = {"Child Care": "childcare", "Community Club": "comclub",
+                "Clinic": "clinic", "Disabled-Friendly": "disabled",
+                "Elder Care": "eldercare", "Exercise Facilities": "exercise",
+                "Family": "family", "Hawker Centre": "hawker",
+                "Kindergarten": "kindergarten", "Library": "lib",
+                "Nursing": "nursing", "Play": "play", "Relaxation": "relax",
+                "School": "school"}
     # backend processes based on the latlong
+    feat_send = ""
+    for k in feat:
+        feat_send += feat_map[k] + " "
+
+    if feat_send is "":
+        feat_send = "school"
 
     # housing.append(latlong)
-    return jsonify(proc_lib.query(location=latlong, features=feat)), 201
+    return jsonify(proc_lib.query(
+        location=latlong,
+        features=feat_send,
+        minprice=int(minprice) * 1000,
+        maxprice=int(maxprice) * 1000
+    )), 201
+    # return jsonify(proc_lib.query()), 201
 
 
 @app.errorhandler(404)

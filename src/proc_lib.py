@@ -31,6 +31,7 @@ def query_data(location, type, items=5):
 
 def query_hdb(location, filter, items=5, low_price=300000, high_price=400000):
     DATABASE = ('../data/data.db')
+    print low_price, high_price
     con = lite.connect(DATABASE)
     data = []
     res = []
@@ -86,15 +87,14 @@ class Candidate(object):
         print self.address, self.distance, int(self.value)
 
 
-def query(location=home, features=feat_tmp):
-    res = query_hdb(location, features)
+def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
+    res = query_hdb(location, features, low_price=minprice, high_price=maxprice)
     ret = {}
     ret["n_items"] = len(res)
     for item in res:
         item.compute()
 
     for (k, item) in enumerate(res):
-        print k
         # ret[str(k)] = {}
         tmp = {}
         tmp["address"] = item.address
