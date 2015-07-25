@@ -25,6 +25,7 @@ def query_data(location, type, items=5):
         tmp.append((row[0], vincenty(location, c_loc).km))
     tmp = sorted(tmp, key=lambda item: item[1])
     tmp = tmp[:items]
+    tmp = [{"name":x,"dist":y} for (x,y) in tmp]
     res = tmp
     return res
 
@@ -95,7 +96,7 @@ def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
         item.compute()
 
     for (k, item) in enumerate(res):
-        # ret[str(k)] = {}
+        ret[str(k)] = {}
         tmp = {}
         tmp["address"] = item.address
         tmp["distance"] = item.distance
@@ -106,7 +107,6 @@ def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
         for elem in features.split():
             tmp[elem] = item.features[elem]
         ret[(str(k))] = tmp
-
     return ret
 
 
