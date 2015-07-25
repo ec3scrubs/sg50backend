@@ -1,7 +1,7 @@
 import json
 import urllib2
 
-from flask import Flask, jsonify, make_response, request, abort
+from flask import Flask, jsonify, json, make_response, request, abort
 from flask_cors import CORS
 
 import proc_lib
@@ -66,7 +66,7 @@ def create_entry():
         feat_send = "school"
 
     # housing.append(latlong)
-    return jsonify(proc_lib.query(
+    return json.dumps(proc_lib.query(
         location=latlong,
         features=feat_send,
         minprice=int(minprice) * 1000,

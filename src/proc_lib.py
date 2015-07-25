@@ -90,13 +90,14 @@ class Candidate(object):
 
 def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
     res = query_hdb(location, features, low_price=minprice, high_price=maxprice)
-    ret = {}
-    ret["n_items"] = len(res)
+    ret = []
+    # ret = {}
+    # ret["n_items"] = len(res)
     for item in res:
         item.compute()
 
     for (k, item) in enumerate(res):
-        ret[str(k)] = {}
+        # ret[str(k)] = {}
         tmp = {}
         tmp["address"] = item.address
         tmp["distance"] = item.distance
@@ -106,7 +107,8 @@ def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
         tmp["value"] = item.value
         for elem in features.split():
             tmp[elem] = item.features[elem]
-        ret[(str(k))] = tmp
+        # ret[(str(k))] = tmp
+        ret.append(tmp)
     return ret
 
 
