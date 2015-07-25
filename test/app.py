@@ -35,11 +35,19 @@ housing = [
 ]
 
 def callSD(query):
-    #edit the q
-    base_url = 'http://www.streetdirectory.com/api/?mode=search&act=all&profile=sd_mobile&country=sg&q=ang mo kio ave 1&output=json&start=0&limit=1'
-    data = json.load(urllib2.urlopen('http://www.streetdirectory.com/api/?mode=search&act=all&profile=sd_mobile&country=sg&q='+ str(query) +'&output=json&start=0&limit=1'))
+    query = query.replace(' ', '%20')
+    latlong = []
+    data = json.load(urllib2.urlopen("http://www.streetdirectory.com/api/?mode=search&act=all&profile=sd_mobile&country=sg&q="+ str(query) +"&output=json&start=0&limit=1"))
     print data
-    return
+    if len(data) > 1:
+        lat = data[1]['y']
+        lng = data[1]['x']
+    else:
+        lat = data[0]['y']
+        lng = data[0]['x']
+    latlong.append(lat)
+    latlong.append(lng)
+    return latlong
 
 @app.route('/api/testfunc', methods=['GET'])
 def get_tasks():
