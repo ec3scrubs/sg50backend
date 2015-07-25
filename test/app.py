@@ -17,6 +17,20 @@ tasks = [
     }
 ]
 
+housing = [
+    {
+        'id': 1,
+        'region': 'Serangoon',
+        'address': '507 Serangoon North Avenue 4',
+        'postal': '550507',
+        'price': '300000',
+        'x': '103.875386',
+        'y': '1.371973',
+        'nearby': {
+            
+        }
+    }
+]
 
 @app.route('/api/testfunc', methods=['GET'])
 def get_tasks():
