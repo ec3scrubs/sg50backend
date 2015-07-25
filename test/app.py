@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, make_response, request, abort
+import json
+import urllib2
 
 app = Flask(__name__)
 
@@ -31,6 +33,13 @@ housing = [
         }
     }
 ]
+
+def callSD(query):
+    #edit the q
+    base_url = 'http://www.streetdirectory.com/api/?mode=search&act=all&profile=sd_mobile&country=sg&q=ang mo kio ave 1&output=json&start=0&limit=1'
+    data = json.load(urllib2.urlopen('http://www.streetdirectory.com/api/?mode=search&act=all&profile=sd_mobile&country=sg&q='+ str(query) +'&output=json&start=0&limit=1'))
+    print data
+    return
 
 @app.route('/api/testfunc', methods=['GET'])
 def get_tasks():
