@@ -1,14 +1,10 @@
 __author__ = 'mark'
 
-from flask import Flask, jsonify
-
 import sqlite3 as lite
 import json
 
 from geopy.distance import vincenty
 
-
-app = Flask(__name__)
 home = (1.3725179, 103.83279)
 
 
@@ -89,7 +85,6 @@ class Candidate(object):
     def display(self):
         print self.address, self.distance, int(self.value)
 
-@app.route('/api')
 def test():
     features = "school hospital"
     res = query_hdb(home, features)
@@ -112,9 +107,10 @@ def test():
             tmp[elem] = item.features[elem]
         ret[(str(k))] = tmp
 
-    return jsonify(ret)
+    return ret
 
 
 if __name__ == "__main__":
     # res = query_data(location=home,type="school")
-    app.run(debug=True)
+    #app.run(debug=True)
+    pass

@@ -4,6 +4,7 @@ import urllib2
 
 import proc_lib
 
+
 app = Flask(__name__)
 
 tasks = [
@@ -69,16 +70,13 @@ def create_entry():
     #fetch latlong from SD based on address
     #call backend to fetch results
 
-    # if not request.json or not 'address' in request.json:
-    #     abort(400)
-    # latlong = callSD(str(request.json.get('address')))
-    #backend processes based on the latlong
-    return jsonify(proc_lib.test()), 201
-    #return jsonify({'newEntry': latlong}), 201
-
-def test_entry():
+    if not request.json or not 'address' in request.json:
+        abort(400)
     latlong = callSD(str(request.json.get('address')))
+    #backend processes based on the latlong
 
+    #housing.append(latlong)
+    return jsonify(proc_lib.test()), 201
 
 @app.route('/api/testfunc/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
