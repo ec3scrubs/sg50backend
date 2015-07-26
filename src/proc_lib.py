@@ -96,6 +96,15 @@ def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
     for item in res:
         item.compute()
 
+    feat_map = {"Child Care": "childcare", "Community Club": "comclub",
+                "Clinic": "clinic", "Disabled-Friendly": "disabled",
+                "Elder Care": "eldercare", "Exercise Facilities": "exercise",
+                "Family": "family", "Hawker Centre": "hawker",
+                "Kindergarten": "kindergarten", "Library": "lib",
+                "Nursing": "nursing", "Play": "play", "Relaxation": "relax",
+                "School": "school"}
+    feat_map = {v:k for (k,v) in feat_map.iteritems()}
+
     for (k, item) in enumerate(res):
         # ret[str(k)] = {}
         tmp = {}
@@ -105,8 +114,9 @@ def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
         tmp["score"] = item.score
         tmp["size"] = item.area
         tmp["value"] = item.value
+        tmp["features"] = {}
         for elem in features.split():
-            tmp[elem] = item.features[elem]
+            tmp["features"][feat_map[elem]] = item.features[elem]
         # ret[(str(k))] = tmp
         ret.append(tmp)
     return ret

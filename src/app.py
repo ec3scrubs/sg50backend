@@ -63,7 +63,7 @@ def create_entry():
         feat_send += feat_map[k] + " "
 
     if feat_send is "":
-        feat_send = "school"
+        feat_send = "school clinic"
 
     # housing.append(latlong)
     return json.dumps(proc_lib.query(
