@@ -56,7 +56,7 @@ def create_entry():
                 "Family": "family", "Hawker Centre": "hawker",
                 "Kindergarten": "kindergarten", "Library": "lib",
                 "Nursing": "nursing", "Play": "play", "Relaxation": "relax",
-                "School": "school"}
+                "School": "school", "Hospital": "hospital"}
     # backend processes based on the latlong
     feat_send = ""
     for k in feat:

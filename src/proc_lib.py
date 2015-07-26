@@ -67,6 +67,9 @@ class Candidate(object):
         self.value = data[7] / float(data[4])
         self.filter = filter.split()
         self.score = 0
+        self.healthscore = data[8]
+        self.elderscore = data[9]
+        self.familyscore = data[10]
         self.features = {}
 
     def __lt__(self, other):
@@ -77,8 +80,9 @@ class Candidate(object):
     def compute_swift(self):
         price_factor = 1  # Tweak price factor to adjust the importance of
         # price, ironically higher number makes price less important
-        price_calc = float(price_factor * 250)
+        price_calc = float(price_factor * 500)
         self.score = self.distance + self.value / price_calc
+        self.score += (self.healthscore + self.elderscore + self.familyscore)/40
 
     def compute(self):
         for item in self.filter:
@@ -102,7 +106,7 @@ def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
                 "Family": "family", "Hawker Centre": "hawker",
                 "Kindergarten": "kindergarten", "Library": "lib",
                 "Nursing": "nursing", "Play": "play", "Relaxation": "relax",
-                "School": "school"}
+                "School": "school", "Hospital": "hospital"}
     feat_map = {v:k for (k,v) in feat_map.iteritems()}
 
     for (k, item) in enumerate(res):
@@ -111,9 +115,12 @@ def query(location=home, features=feat_tmp, minprice=200000, maxprice=400000):
         tmp["address"] = item.address
         tmp["distance"] = item.distance
         tmp["price"] = item.price
-        tmp["score"] = item.score
         tmp["size"] = item.area
         tmp["value"] = item.value
+        tmp["healthscore"] = (1/item.healthscore) * 100
+        tmp["elderscore"] = (1/item.elderscore) * 100
+        tmp["familyscore"] = (1/item.familyscore) * 100
+        tmp["score"] = (1/item.score) * 700
         tmp["features"] = {}
         for elem in features.split():
             tmp["features"][feat_map[elem]] = item.features[elem]
